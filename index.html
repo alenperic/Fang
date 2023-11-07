@@ -3,7 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Text De-fanger/Fanger</title>
+    <title>Text Fang/De-fang Tool</title>
+    <meta
+      name="description"
+      content="A user-friendly text de-fanger/fanger tool for cybersecurity professionals, allowing easy conversion of potentially harmful URLs into a safe format for sharing and analysis."
+    />
+    <meta
+      name="keywords"
+      content="cybersecurity, de-fang, fang, text processing, online tool, security, web application"
+    />
+    <meta name="author" content="alenperic" />
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -55,6 +64,19 @@
         border: none;
         border-radius: 4px;
       }
+      .copy-button {
+        padding: 10px;
+        margin-top: 10px;
+        background-color: #4caf50; /* Green background */
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+      }
       .description {
         margin-top: 20px;
         text-align: center;
@@ -74,7 +96,7 @@
       </a>
     </div>
 
-    <div id="title">Text Fanger/De-fanger Tool</div>
+    <div id="title">Text Fang/De-Fang Tool</div>
 
     <div id="wrapper">
       <textarea
@@ -88,6 +110,8 @@
       ></textarea>
     </div>
 
+    <button class="copy-button" id="copyButton">Copy to Clipboard</button>
+
     <div class="description">
       <p>
         To use this tool, simply start typing in the left text area. The page
@@ -95,8 +119,10 @@
         format (standard URLs and indicators) or 'de-fanged' format (with hxxp
         and brackets). It will then auto-convert the text accordingly and
         display it in the right text area. For example, typing
-        'http://example.com' will convert it to 'hxxp[:][.]example[.]com', while
-        typing 'hxxp[:][.]example[.]com' will revert it to 'http://example.com'.
+        'http://www.example.com' will convert it to
+        'hxxp[:]//www[.]example[.]com', while typing
+        'hxxp[:]//www[.]example[.]com' will revert it to
+        'http://www.example.com'.
       </p>
     </div>
 
@@ -128,6 +154,21 @@
           let inputText = this.value;
           document.getElementById("outputText").value =
             autoProcessText(inputText);
+        });
+
+      // Event listener for the copy button
+      document
+        .getElementById("copyButton")
+        .addEventListener("click", function () {
+          const textToCopy = document.getElementById("outputText").value;
+          navigator.clipboard
+            .writeText(textToCopy)
+            .then(() => {
+              console.log("Text copied to clipboard");
+            })
+            .catch((err) => {
+              console.error("Failed to copy text: ", err);
+            });
         });
     </script>
   </body>
