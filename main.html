@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text De-fanger/Fanger</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-color: #2b2f3a;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+      }
+      .header {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+      }
+      .header img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        vertical-align: middle;
+        margin-right: 10px;
+      }
+      .header a {
+        color: #fff;
+        text-decoration: none;
+        vertical-align: middle;
+      }
+      #title {
+        margin-top: 60px;
+        margin-bottom: 20px;
+        font-size: 2em;
+      }
+      #wrapper {
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+      }
+      textarea {
+        width: 48%;
+        height: 200px;
+        padding: 10px;
+        font-size: 16px;
+        margin: 10px;
+        background-color: #1e2129;
+        color: #ddd;
+        border: none;
+        border-radius: 4px;
+      }
+      .description {
+        margin-top: 20px;
+        text-align: center;
+        width: 80%;
+        font-size: 0.9em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <a href="https://github.com/alenperic" target="_blank">
+        <img
+          src="https://avatars.githubusercontent.com/u/20021065?v=4"
+          alt="GitHub Profile Icon"
+        />
+        alenperic
+      </a>
+    </div>
+
+    <div id="title">Text Fanger/De-fanger Tool</div>
+
+    <div id="wrapper">
+      <textarea
+        id="inputText"
+        placeholder="Enter text to auto de-fang or fang"
+      ></textarea>
+      <textarea
+        id="outputText"
+        placeholder="Processed result will appear here"
+        readonly
+      ></textarea>
+    </div>
+
+    <div class="description">
+      <p>
+        To use this tool, simply start typing in the left text area. The page
+        will automatically detect whether the entered text is in a 'fanged'
+        format (standard URLs and indicators) or 'de-fanged' format (with hxxp
+        and brackets). It will then auto-convert the text accordingly and
+        display it in the right text area. For example, typing
+        'http://example.com' will convert it to 'hxxp[:][.]example[.]com', while
+        typing 'hxxp[:][.]example[.]com' will revert it to 'http://example.com'.
+      </p>
+    </div>
+
+    <script>
+      // JavaScript for auto de-fanging and fanging text
+      function autoProcessText(text) {
+        // Detect if text is likely fanged or de-fanged based on common indicators
+        const hasDeFangIndicators = /(\bhxxp\b|\[\.\]|\[:\])/.test(text);
+
+        if (hasDeFangIndicators) {
+          // De-fang logic: Change '[.]' to '.' and '[:]' to ':', and 'hxxp' to 'http'
+          return text
+            .replace(/\[\.\]/g, ".")
+            .replace(/\[:\]/g, ":")
+            .replace(/hxxp/g, "http");
+        } else {
+          // Fang logic: Change '.' to '[.]' and ':' to '[:]', and 'http' to 'hxxp'
+          return text
+            .replace(/\./g, "[.]")
+            .replace(/:/g, "[:]")
+            .replace(/http/g, "hxxp");
+        }
+      }
+
+      // Event listener for the text input
+      document
+        .getElementById("inputText")
+        .addEventListener("input", function () {
+          let inputText = this.value;
+          document.getElementById("outputText").value =
+            autoProcessText(inputText);
+        });
+    </script>
+  </body>
+</html>
