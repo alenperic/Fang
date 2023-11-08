@@ -13,7 +13,7 @@ This tool is built with:
 - CSS
 - Vanilla JavaScript
 
-No backend processing means it's fast, secure, and privacy-friendly.
+No backend means it's quick and respects your privacy.
 
 ## Usage
 
