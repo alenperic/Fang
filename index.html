@@ -1,86 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChatGPT Models</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fang/De-Feng Tool</title>
+    <meta
+      name="description"
+      content="Easily convert malicious URLs into a non-executable format and vice versa with the Fang/De-Feng Tool, making sharing over the web safer."
+    />
+    <meta
+      name="keywords"
+      content="URL, url, ip, IP, ip address, fang, de-fang, converter,
+      fanging, de-fanging, tool, cybersecurity, Fang, De-Feng, text processing,
+      online tool, security, web application"
+    />
+    <meta name="author" content="alenperic" />
     <style>
-        body {
-            background-color: #1a1f2b; /* Dark bluish-grey background */
-            color: #f4f4f4;
-            font-family: 'Roboto', sans-serif; /* Roboto font */
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            height: 100vh; /* Full viewport height */
-        }
-        .profile-link {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            color: #f4f4f4;
-            text-decoration: none;
-            font-size: 20px;
-        }
-        .profile-link img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            vertical-align: middle;
-            margin-right: 10px;
-        }
-        .logo-container img {
-            max-width: 200px;
-            margin-bottom: 40px; /* Space between logo and search bar */
-        }
-        .search-container {
-            margin-top: -50px; /* Adjust based on content above */
-        }
-        .search-container input[type="text"] {
-            width: 50%;
-            padding: 10px;
-            margin-top: 20px;
-            border: none;
-            border-radius: 4px;
-            color: #333;
-        }
-        .additional-links a {
-            color: #4a90e2; /* Lighter blue for links */
-            text-decoration: none;
-            font-size: 16px;
-        }
-        .additional-links a:hover {
-            text-decoration: underline;
-        }
-        p {
-            margin-top: 30px;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-color: #2b2f3a;
+        color: white;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+      }
+      .header {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+      }
+      .header img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        vertical-align: middle;
+        margin-right: 10px;
+      }
+      .header a {
+        color: white;
+        text-decoration: none;
+        vertical-align: middle;
+      }
+      #title {
+        margin-top: 60px;
+        margin-bottom: 20px;
+        font-size: 2em;
+      }
+      #wrapper {
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+      }
+      textarea {
+        width: 48%;
+        height: 200px;
+        padding: 10px;
+        font-size: 16px;
+        margin: 10px;
+        background-color: #1e2129;
+        color: #ddd;
+        border: none;
+        border-radius: 4px;
+        overflow: auto;
+      }
+      .copy-button {
+        padding: 10px;
+        margin-top: 10px;
+        background-color: #4caf50; /* Green background */
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+      .description {
+        margin-top: 20px;
+        text-align: center;
+        width: 80%;
+        font-size: 0.9em;
+      }
+      .conversion-example {
+        display: flex;
+        justify-content: space-around; /* Adjusted for closer proximity */
+        align-items: center;
+        margin-top: 20px;
+        width: 80%;
+      }
+      .conversion-example p {
+        margin: 0;
+        flex: 1;
+        text-align: center;
+      }
+      /* Style for the toggle switch */
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+        margin: 20px 0;
+      }
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+      input:checked + .slider {
+        background-color: #2196f3;
+      }
+      input:checked + .slider:before {
+        transform: translateX(26px);
+      }
+      .toggle-label {
+        color: #fff;
+        font-weight: normal;
+        margin-left: 10px;
+        vertical-align: middle;
+      }
     </style>
-</head>
-<body>
-    <a href="https://github.com/alenperic" target="_blank" class="profile-link">
-        <img src="https://avatars.githubusercontent.com/u/20021065?v=4" alt="GitHub Profile Picture">
-        <span>@alenperic</span>
-    </a>
-    <div class="logo-container">
-        <img src="https://downloads.intercomcdn.com/i/o/406339/b83d08f20c6d78f99331343f/71bc35f3a54fb38a5fff9ef2d4c1879d.png" alt="ChatGPT Logo">
+  </head>
+  <body>
+    <div class="header">
+      <a href="https://github.com/alenperic" target="_blank">
+        <img
+          src="https://avatars.githubusercontent.com/u/20021065?v=4"
+          alt="GitHub Profile Icon"
+        />
+        alenperic
+      </a>
     </div>
-    <div class="search-container">
-        <input type="text" id="gpt-search" placeholder="Search GPT models..." onkeypress="search(event)">
-        <br> <!-- Line break added here -->
+
+    <div id="title">Fang/De-Feng Tool</div>
+
+    <div>
+      <label class="switch">
+        <input type="checkbox" id="conversionModeToggle" />
+        <span class="slider round"></span>
+      </label>
+      <span class="toggle-label">Individual Line Conversion</span>
     </div>
-    <main>
-        <br>
-        <div class="additional-links">
-            <a href="https://chat.openai.com/g/">Create Your Own GPT Model</a>
-            <br><br>
-            <a href="https://help.openai.com/en/articles/8554397-creating-a-gpt">GPT Support Article</a>
-        </div>
-        <p>Explore ChatGPT models and their strengths. <a href="https://github.com/alenperic/My-GPT-Model-Engineer">Recommendations for "My GPT" Prompt Engineering Phrases</a></p>
-    </main>
-</body>
+
+    <div id="wrapper">
+      <textarea
+        id="inputText"
+        placeholder="Enter text to Fang or De-Feng"
+      ></textarea>
+      <textarea
+        id="outputText"
+        placeholder="Processed result will appear here"
+        readonly
+      ></textarea>
+    </div>
+
+    <button class="copy-button" id="copyButton">Copy to Clipboard</button>
+
+    <div class="description">
+      <p>
+        Toggle 'Individual Line Conversion' on for converting each line based on
+        its content. Toggle off to convert all text to match the first line's
+        format. Use the button below to copy the results.
+      </p>
+    </div>
+
+    <div class="conversion-example">
+      <p><strong>Original:</strong> http://example.com</p>
+      <p><strong>Fanged:</strong> hxxp[:][//]example[.]com</p>
+    </div>
+
+    <script>
+      function fang(text) {
+        return text
+          .replace(/http/g, "hxxp")
+          .replace(/\./g, "[.]")
+          .replace(/:/g, "[:]");
+      }
+
+      function deFeng(text) {
+        return text
+          .replace(/hxxp/g, "http")
+          .replace(/\[\.\]/g, ".")
+          .replace(/\[:\]/g, ":");
+      }
+
+      function processText(text, individualConversion) {
+        const lines = text.split("\n");
+        if (individualConversion) {
+          // Apply conversion for each line individually
+          return lines
+            .map((line) => (line.includes("http") ? fang(line) : deFeng(line)))
+            .join("\n");
+        } else {
+          // Determine the conversion based on the first line
+          const conversionMethod = lines[0].includes("http") ? fang : deFeng;
+          return lines.map(conversionMethod).join("\n");
+        }
+      }
+
+      // Event listeners for input text area and conversion mode toggle
+      document
+        .getElementById("conversionModeToggle")
+        .addEventListener("change", function () {
+          const textArea = document.getElementById("inputText");
+          const outputArea = document.getElementById("outputText");
+          const individualConversion = this.checked;
+          outputArea.value = processText(textArea.value, individualConversion);
+        });
+
+      document
+        .getElementById("inputText")
+        .addEventListener("input", function () {
+          const outputArea = document.getElementById("outputText");
+          const individualConversion = document.getElementById(
+            "conversionModeToggle"
+          ).checked;
+          outputArea.value = processText(this.value, individualConversion);
+        });
+
+      document
+        .getElementById("copyButton")
+        .addEventListener("click", function () {
+          const textToCopy = document.getElementById("outputText").value;
+          navigator.clipboard
+            .writeText(textToCopy)
+            .then(() => {
+              console.log("Text copied to clipboard");
+            })
+            .catch((err) => {
+              console.error("Failed to copy text: ", err);
+            });
+        });
+
+      // Setup synchronized scrolling
+      document
+        .getElementById("inputText")
+        .addEventListener("scroll", function () {
+          document.getElementById("outputText").scrollTop = this.scrollTop;
+        });
+
+      document
+        .getElementById("outputText")
+        .addEventListener("scroll", function () {
+          document.getElementById("inputText").scrollTop = this.scrollTop;
+        });
+    </script>
+  </body>
 </html>
